@@ -10,6 +10,7 @@ import com.pinyougou.pojo.TbSpecification;
 import com.pinyougou.pojo.TbSpecificationExample;
 import com.pinyougou.pojo.TbSpecificationExample.Criteria;
 import com.pinyougou.pojo.TbSpecificationOption;
+import com.pinyougou.pojo.TbSpecificationOptionExample;
 import com.pinyougou.pojogroup.Specification;
 import com.pinyougou.sellergoods.service.SpecificationService;
 
@@ -50,8 +51,8 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 */
 	@Override
 	public void add(Specification specification) {
-		
-		TbSpecification tbspecification=specification.getSpecification();//获取规格的实体
+		//获取规格的实体
+		TbSpecification tbspecification=specification.getSpecification();
 		specificationMapper.insert(tbspecification);	
 		//获取规格选项的集合
 		List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
@@ -67,8 +68,27 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * 修改
 	 */
 	@Override
-	public void update(TbSpecification specification){
-		specificationMapper.updateByPrimaryKey(specification);
+	public void update(Specification specification){
+		
+		//获取规格的实体
+		TbSpecification tbspecification=specification.getSpecification();
+		specificationMapper.updateByPrimaryKey(tbspecification);	
+		
+		//删除原来规格对应的规格选项
+		TbSpecificationOptionExample example=new TbSpecificationOptionExample();
+		com.pinyougou.pojo.TbSpecificationOptionExample.Criteria criteria=example.createCriteria();
+		criteria.andSpecIdEqualTo(tbspecification.getId());
+		
+		specificationOptionMapper.deleteByExample(example);
+		
+		//获取规格选项的集合
+		List<TbSpecificationOption> specificationOptionList = specification.getSpecificationOptionList();
+		for(TbSpecificationOption option:specificationOptionList){
+			option.setSpecId(tbspecification.getId());//设置规格ID
+			specificationOptionMapper.insert(option);//新增规格
+		
+		}
+				
 	}	
 	
 	/**
@@ -77,8 +97,21 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * @return
 	 */
 	@Override
-	public TbSpecification findOne(Long id){
-		return specificationMapper.selectByPrimaryKey(id);
+	public Specification findOne(Long id){
+		Specification specification=new Specification();
+		//获取规格实体类
+		TbSpecification tbSpecification=specificationMapper.selectByPrimaryKey(id);
+		specification.setSpecification(tbSpecification);
+		
+		//获取规格选项列表
+		TbSpecificationOptionExample example=new TbSpecificationOptionExample();
+		com.pinyougou.pojo.TbSpecificationOptionExample.Criteria criteria=example.createCriteria();
+		criteria.andSpecIdEqualTo(id);
+		List<TbSpecificationOption> specificationOptionList=specificationOptionMapper.selectByExample(example);
+		
+		
+		specification.setSpecificationOptionList(specificationOptionList);
+		return specification;//组合实体类 
 	}
 
 	/**
