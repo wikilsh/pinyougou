@@ -1,6 +1,7 @@
 package com.pinyougou.sellergoods.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.zookeeper.Op.Create;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,4 +94,14 @@ public class BrandServiceImpl implements BrandService {
 	
 	}
 
+	/**
+	 * 列表数据
+	 */
+	@Override
+	public List<Map> selectOptionList() {
+		
+		return brandMapper.selectOptionList();
+	}
+
+	
 }

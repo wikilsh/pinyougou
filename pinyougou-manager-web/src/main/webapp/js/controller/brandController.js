@@ -23,24 +23,24 @@
    			);
    		}
    		
-   		//品牌增加
-   		$scope.save=function(){
-   			var object=null;
-   			if($scope.entity.id!=null){
-   				object=brandService.update($scope.entity);
-   			}else{
-   				object=brandService.add($scope.entity);
-   			}
-   			object.success(
-   				function(response){
-   					if(response.success){
-   						$scope.reloadList();//刷新页面
-   					}else{
-   						alert(response.success);
-   					}
-   				}		
-   			)
+   	//品牌增加
+   	$scope.save=function(){
+   		var object=null;
+   		if($scope.entity.id!=null){
+   			object=brandService.update($scope.entity);
+   		}else{
+   			object=brandService.add($scope.entity);
    		}
+   		object.success(
+   			function(response){
+   				if(response.success){
+   					$scope.reloadList();//刷新页面
+   				}else{
+   					alert(response.success);
+   				}
+   			}		
+   		)
+   	}
    		
    		//查询实体
    		$scope.findOne=function(id){
