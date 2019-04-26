@@ -1,4 +1,5 @@
 package com.pinyougou.sellergoods.service.impl;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -9,6 +10,7 @@ import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojo.TbSellerExample;
 import com.pinyougou.pojo.TbSellerExample.Criteria;
 import com.pinyougou.sellergoods.service.SellerService;
+import com.sun.tools.classfile.Opcode.Set;
 
 import entity.PageResult;
 
@@ -45,7 +47,9 @@ public class SellerServiceImpl implements SellerService {
 	 * 增加
 	 */
 	@Override
-	public void add(TbSeller seller) {
+	public void add(TbSeller seller){
+		seller.setStatus("0");
+		seller.setCreateTime(new Date());
 		sellerMapper.insert(seller);		
 	}
 

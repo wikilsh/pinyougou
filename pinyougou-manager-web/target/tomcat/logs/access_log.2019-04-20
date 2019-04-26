@@ -1,6 +1,0 @@
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:44 +0800] "GET /admin/brand.html HTTP/1.1" 200 9943 http-bio-9101-exec-10 75
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:45 +0800] "GET /admin/brand.html HTTP/1.1" 304 - http-bio-9101-exec-10 2
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:46 +0800] "GET /admin/brand.html HTTP/1.1" 304 - http-bio-9101-exec-10 1
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:46 +0800] "GET /admin/brand.html HTTP/1.1" 304 - http-bio-9101-exec-10 1
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:46 +0800] "GET /admin/brand.html HTTP/1.1" 304 - http-bio-9101-exec-10 2
-0:0:0:0:0:0:0:1 - - [20/Apr/2019:00:06:46 +0800] "GET /admin/brand.html HTTP/1.1" 304 - http-bio-9101-exec-2 0
