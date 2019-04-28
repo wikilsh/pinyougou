@@ -1,4 +1,5 @@
- //控制层 
+
+//控制层 
 app.controller('itemController' ,function($scope,$controller   ,itemService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
@@ -66,7 +67,6 @@ app.controller('itemController' ,function($scope,$controller   ,itemService){
 	}
 	
 	$scope.searchEntity={};//定义搜索对象 
-	
 	//搜索
 	$scope.search=function(page,rows){			
 		itemService.search(page,rows,$scope.searchEntity).success(
@@ -77,4 +77,6 @@ app.controller('itemController' ,function($scope,$controller   ,itemService){
 		);
 	}
     
+	
+	
 });	
