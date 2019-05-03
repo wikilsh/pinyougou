@@ -18,10 +18,12 @@ import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.mapper.TbSellerMapper;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbGoodsDesc;
 import com.pinyougou.pojo.TbGoodsExample;
 import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.pojo.TbItemExample;
 import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.pojogroup.Goods;
 import com.pinyougou.sellergoods.service.GoodsService;
@@ -85,20 +87,8 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.getGoodsDesc().setGoodsId(goods.getGoods().getId());//将商品基本表的ID给商品扩展表
 		goodsDescMapper.insert(goods.getGoodsDesc());//插入商品扩展数据
 		
-		if("1".equals(goods.getGoods().getIsEnableSpec())){
-			for(TbItem item:goods.getItemList()){
-				//标题
-				String title=goods.getGoods().getGoodsName();
-				Map<String, Object> specMap = JSON.parseObject(item.getSpec());
-				for(String key:specMap.keySet()){
-					title+=" "+specMap.get(key);
-				}
-				item.setTitle(title);
-				setItemValus(goods, item);
-				itemMapper.insert(item);
-			}
-			
-		}
+		saveItemList(goods);//插入商品SKU列表数据
+		
 		
 	}
 	
@@ -128,13 +118,54 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 	}
 	
+	/**
+	 * 插入SKU列表数据
+	 * @param goods
+	 */
+	private void saveItemList(Goods goods) {
+		if("1".equals(goods.getGoods().getIsEnableSpec())){
+			for(TbItem item:goods.getItemList()){
+				//标题
+				String title=goods.getGoods().getGoodsName();
+				Map<String, Object> specMap = JSON.parseObject(item.getSpec());
+				for(String key:specMap.keySet()){
+					title+=" "+specMap.get(key);
+				}
+				item.setTitle(title);
+				setItemValus(goods, item);
+				itemMapper.insert(item);
+			}
+			
+		}else{//没有启用规格
+			TbItem item=new TbItem();
+			item.setTitle(goods.getGoods().getGoodsName());//标题
+			item.setPrice(goods.getGoods().getPrice());//价格
+			item.setNum(99999);//库存数量
+			item.setStatus("1");//状态
+			item.setIsDefault("1");//默认
+			item.setSpec("{}");//规格
+		}
+	}
+	
 	
 	/**
 	 * 修改
 	 */
 	@Override
-	public void update(TbGoods goods){
-		goodsMapper.updateByPrimaryKey(goods);
+	public void update(Goods goods){
+		//更新基本表数据
+		goodsMapper.updateByPrimaryKey(goods.getGoods());
+		//更新扩展表数据
+		goodsDescMapper.updateByPrimaryKey(goods.getGoodsDesc());
+		
+		//删除原有的SKU数据
+		TbItemExample example=new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria=example.createCriteria();
+		criteria.andGoodsIdEqualTo(goods.getGoods().getId());
+		itemMapper.deleteByExample(example);
+		
+		//添加新的SKU列表数据
+		saveItemList(goods);
 	}	
 	
 	/**
@@ -143,8 +174,24 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @return
 	 */
 	@Override
-	public TbGoods findOne(Long id){
-		return goodsMapper.selectByPrimaryKey(id);
+	public Goods findOne(Long id){
+		Goods goods=new Goods();
+		//商品基本表
+		TbGoods tbGoods=goodsMapper.selectByPrimaryKey(id);
+		goods.setGoods(tbGoods);
+		//商品扩展表
+		TbGoodsDesc tbGoodsDesc=goodsDescMapper.selectByPrimaryKey(id);
+		goods.setGoodsDesc(tbGoodsDesc);
+		
+		//读取SKU列表
+		
+		TbItemExample example=new TbItemExample();
+		com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+		criteria.andGoodsIdEqualTo(id);
+		List<TbItem> itemList = itemMapper.selectByExample(example);
+		goods.setItemList(itemList);
+		
+		return goods;
 	}
 
 	/**
@@ -167,8 +214,8 @@ public class GoodsServiceImpl implements GoodsService {
 		
 		if(goods!=null){			
 			if(goods.getSellerId()!=null && goods.getSellerId().length()>0){
-				criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
-				//criteria.andSellerIdEqualTo(goods.getSellerId());
+				//criteria.andSellerIdLike("%"+goods.getSellerId()+"%");
+				criteria.andSellerIdEqualTo(goods.getSellerId());
 			}
 			if(goods.getGoodsName()!=null && goods.getGoodsName().length()>0){
 				criteria.andGoodsNameLike("%"+goods.getGoodsName()+"%");
