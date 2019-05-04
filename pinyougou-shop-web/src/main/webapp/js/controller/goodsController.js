@@ -37,6 +37,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 				$scope.entity.goodsDesc.itemImages=JSON.parse($scope.entity.goodsDesc.itemImages);
 				//显示扩展属性
 				$scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+				
 				//规格属性
 				$scope.entity.goodsDesc.specificationItems=JSON.parse($scope.entity.goodsDesc.specificationItems);
 				
@@ -169,7 +170,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 				$scope.typeTemplate=response;//获取类型模板
 				$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);//品牌列表
 				//扩展属性
-				if( $location.search()['id']==null ){//如果是增加商品
+				if($location.search()['id']==null ){//如果是增加商品
 					$scope.entity.goodsDesc.customAttributeItems= JSON.parse($scope.typeTemplate.customAttributeItems);
 				}
 			}

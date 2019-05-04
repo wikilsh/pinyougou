@@ -90,5 +90,20 @@ $scope.status=['未审核','已审核','审核未通过','已关闭'];//商品�
 		);
 	}
 	
+	//更改审核状态
+	$scope.updateStatus=function(status){
+		goodsService.updateStatus($scope.selectIds,status).success(
+			function(response){
+				if(response.success){//成功
+					$scope.reloadList();//刷新列表
+					$scope.selectIds=[];
+				}else{
+					alert(response.message);
+				}
+			}
+		);
+	}
+	
+	
 	
 });	
