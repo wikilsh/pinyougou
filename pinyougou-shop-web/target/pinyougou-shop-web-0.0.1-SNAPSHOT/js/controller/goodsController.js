@@ -37,6 +37,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 				$scope.entity.goodsDesc.itemImages=JSON.parse($scope.entity.goodsDesc.itemImages);
 				//显示扩展属性
 				$scope.entity.goodsDesc.customAttributeItems=JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+				
 				//规格属性
 				$scope.entity.goodsDesc.specificationItems=JSON.parse($scope.entity.goodsDesc.specificationItems);
 				
@@ -49,21 +50,28 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 		);				
 	}
 	
-	//增加 商品
-	$scope.add=function(){				
+	//保存 
+	$scope.save=function(){	
 		$scope.entity.goodsDesc.introduction=editor.html();
-		goodsService.add($scope.entity).success(
+		
+		var serviceObject;//服务层对象  				
+		if($scope.entity.goods.id!=null){//如果有ID
+			serviceObject=goodsService.update( $scope.entity ); //修改  
+		}else{
+			serviceObject=goodsService.add( $scope.entity  );//增加 
+		}				
+		serviceObject.success(
 			function(response){
-				if(response.success){	
-		        	alert('新增成功');
-		        	$scope.entity={};
-		        	editor.html("");//清空富文本编辑器
+				if(response.success){
+					alert("保存成功");
+					location.href='goods.html';
+					
 				}else{
 					alert(response.message);
 				}
 			}		
 		);				
-	}
+	}	
 	
 	 
 	//批量删除 
@@ -162,7 +170,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,goodsSer
 				$scope.typeTemplate=response;//获取类型模板
 				$scope.typeTemplate.brandIds=JSON.parse($scope.typeTemplate.brandIds);//品牌列表
 				//扩展属性
-				if( $location.search()['id']==null ){//如果是增加商品
+				if($location.search()['id']==null ){//如果是增加商品
 					$scope.entity.goodsDesc.customAttributeItems= JSON.parse($scope.typeTemplate.customAttributeItems);
 				}
 			}

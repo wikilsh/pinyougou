@@ -174,10 +174,10 @@
                             <!--扩展属性-->
                             <div class="tab-pane" id="customAttribute">
                                 <div class="row data-type">                                
-	                                <div ng-repeat="pojo in entity.goodsDesc.customAttributeItems">
-		                                <div class="col-md-2 title">{{pojo.text}}</div>
+	                                <div ng-repeat="item in entity.goodsDesc.customAttributeItems">
+		                                <div class="col-md-2 title">{{item.text}}</div>
 				                        <div class="col-md-10 data">
-				                              <input class="form-control" placeholder="{{pojo.text}}">	            	 
+				                              <input class="form-control" placeholder="{{item.text}}" ng-model="item.value">	            	 
 				                        </div>
 	                                </div>       
 																	
@@ -264,8 +264,9 @@
                  	
                    </div>
                   <div class="btn-toolbar list-toolbar">
-				      <button class="btn btn-primary" ng-click="add()"><i class="fa fa-save"></i>保存</button>
-				      <button class="btn btn-default" >返回列表</button>
+				      <button class="btn btn-primary" ng-click="save()"><i class="fa fa-save"></i>保存</button>
+				     <a class="btn btn-primary" href="goods.html">返回列表</a>
+				      
 				  </div>
 			
             </section>
