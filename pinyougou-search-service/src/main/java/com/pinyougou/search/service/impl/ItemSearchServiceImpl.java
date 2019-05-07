@@ -14,23 +14,23 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.search.service.ItemSearchService;
 
-@Service(timeout=3000)
+@Service(timeout=6000)
 public class ItemSearchServiceImpl implements ItemSearchService {
 
 	@Autowired
 	private SolrTemplate solrTemplate;
 	
 	@Override
-	public Map<String, Object> search(Map searchMap) {
+	public Map search(Map searchMap) {
 		
-		Map<String, Object> map=new HashMap<>();
+		Map map=new HashMap<>();
 		
 		Query query=new SimpleQuery("*:*");
-		Criteria criteria=new Criteria("item_keywords").is(searchMap.get("ketwords"));
+		Criteria criteria=new Criteria("item_keywords").is(searchMap.get("keywords"));
 		//添加查询条件
 		query.addCriteria(criteria);
 		ScoredPage<TbItem> page=solrTemplate.queryForPage(query, TbItem.class);
-		map.put("rows", page.getContent());
+		map.put("rows",page.getContent());
 		
 		return map;
 	}

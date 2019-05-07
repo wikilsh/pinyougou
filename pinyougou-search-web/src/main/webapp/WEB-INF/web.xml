@@ -35,6 +35,7 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
 	<welcome-file-list>
 	<welcome-file>search.html</welcome-file>
 

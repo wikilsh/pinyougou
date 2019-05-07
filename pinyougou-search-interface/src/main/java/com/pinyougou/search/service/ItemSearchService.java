@@ -9,6 +9,6 @@ public interface ItemSearchService {
 	 * @param searchMap
 	 * @return
 	 */
-	public Map<String, Object> search(Map searchMap);
+	public Map search(Map searchMap);
 		
 }

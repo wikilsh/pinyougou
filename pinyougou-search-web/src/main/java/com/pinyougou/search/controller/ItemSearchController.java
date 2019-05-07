@@ -14,7 +14,7 @@ import com.pinyougou.search.service.ItemSearchService;
 public class ItemSearchController {
 	@Reference
 	private ItemSearchService itemSearchService;
-	
+
 	@RequestMapping("/search")
 	public Map search(@RequestBody Map searchMap) {
 		return itemSearchService.search(searchMap);
