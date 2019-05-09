@@ -78,7 +78,7 @@
 											ng-model="searchMap.keywords" type="text"
 											class="input-error input-xxlarge" />
 										<button class="sui-btn btn-xlarge btn-danger" type="button"
-											ng-click="search()">搜索</button>
+											ng-click="searchMap.pageNo=1;search()">搜索</button>
 									</div>
 								</form>
 							</div>
@@ -148,7 +148,7 @@
 					<li class="tag" ng-if="searchMap.brand!=''" ng-click="removeSearchItem('brand')">品牌:{{searchMap.brand}}<i class="sui-icon icon-tb-close"></i></li>
 					<li class="tag" ng-repeat="(key,value) in searchMap.spec" ng-click="removeSearchItem(key)">{{key}}:{{value}}<i class="sui-icon icon-tb-close"></i></li>
 					<li class="tag" ng-if="searchMap.price!=''" ng-click="removeSearchItem('price')">价格:{{searchMap.price}}<i class="sui-icon icon-tb-close"></i></li>
-				
+				搜索结果：{{resultMap.total}}条
 				 {{searchMap}}
 				
 				</ul>
@@ -286,25 +286,29 @@
 				<div class="fr page">
 					<div class="sui-pagination pagination-large">
 						<ul>
-							<li class="prev disabled"><a href="#">«上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li class="dotted"><span>...</span></li>
-							<li class="next"><a href="#">下一页»</a></li>
+							<li class="prev {{isTopPage()?'disabled':''}}">
+								<a href="#" ng-click="queryByPage(searchMap.pageNo-1)">«</a>
+							</li>
+							<li class="dotted" ng-if="firstDot==true"><span>...</span></li>
+							<li ng-repeat="page in pageLabel">
+								<a href="#" ng-click="queryByPage(page)">{{page}}</a>
+							</li>
+							<li class="dotted" ng-if="lastDot==true"><span>...</span></li>
+							<li class="next {{isEndPage()?'disabled':''}}">
+								<a href="#" ng-click="queryByPage(searchMap.pageNo+1)">»</a>
+							</li>
 						</ul>
 						<div>
-							<span>共10页&nbsp;</span><span> 到第 <input type="text"
-								class="page-num"> 页
-								<button class="page-confirm" onclick="alert(1)">确定</button></span>
+							<span>&nbsp;共{{resultMap.totalPages}}页&nbsp;</span><span> 到第 <input type="text"
+								class="page-num" ng-model="searchMap.pageNo"> 页
+								<button class="page-confirm"  ng-click="queryByPage(searchMap.pageNo)">确定</button></span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!--hotsale-->
-			<div class="clearfix hot-sale">
+			<br>
+			<div class="clearfix hot-sale">5
 				<h4 class="title">热卖商品</h4>
 				<div class="hot-list">
 					<ul class="yui3-g">
@@ -492,9 +496,8 @@
 						<li>友情链接<span class="space"></span></li>
 						<li>关于我们</li>
 					</ul>
-					<p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000
-						传真：010-82935100</p>
-					<p>京ICP备08001421号京公网安备110108007702</p>
+					<p>地址：河南省郑州市高新区莲花街100号河南工业大学  邮编：450001  电话：0371-666-1688 传真：0371-82992100</p>
+					<p>豫ICP备05002475号 郑公信备4101000000080号</p>
 				</div>
 			</div>
 		</div>
