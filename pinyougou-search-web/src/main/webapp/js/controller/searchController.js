@@ -1,4 +1,4 @@
-app.controller('searchController', function($scope, searchService) {
+app.controller('searchController', function($scope,$location ,searchService) {
 
 	// 定义搜索对象的结构
 	$scope.searchMap = {
@@ -109,13 +109,21 @@ app.controller('searchController', function($scope, searchService) {
 	}
 	//判断关键字是不是品牌
 	$scope.keywordsIsBrand=function(){
-		for(var i=1;i<$scope.resultMap.brandList.length;i++){
+		for(var i=0;i<$scope.resultMap.brandList.length;i++){
 			if($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0){
 				return true;
 			}
-			return false;
 		}
+		return false;
+	}
+	//加载查询字符串
+	$scope.loadkeywords=function(){
+		$scope.searchMap.keywords=$location.search()['keywords'];
+		$scope.search();
 	}
 	
-
+	
 });
+
+
+
