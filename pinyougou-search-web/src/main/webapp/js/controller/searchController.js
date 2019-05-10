@@ -8,7 +8,9 @@ app.controller('searchController', function($scope, searchService) {
 		'spec' : {},
 		'price':'',
 		'pageNo':1,
-		'pageSize':40
+		'pageSize':40,
+		'sortField':'',   //排序字段
+		'sort':''        //ASC || DESC
 	};//搜索条件封装对象
 	
 	// 搜索
@@ -46,7 +48,7 @@ app.controller('searchController', function($scope, searchService) {
 		var firstPage=1;//开始页码
 		var lastPage=maxPageNo;//截至页码
 		$scope.firstDot=true;//前面有点
-		$scope.lastDot=true;//后面有点
+		$scope.lastDot=true;//前面有点
 		
 		if($scope.resultMap.totalPages>5){//如果总页数大于5页 显示部分页码
 			if($scope.searchMap.pageNo<=3){//如果当前页小于等于3页
@@ -61,6 +63,9 @@ app.controller('searchController', function($scope, searchService) {
 				$scope.firstDot=false;
 				$scope.lastDot=false;
 			}
+		}else{
+			$scope.firstDot=false;//前面无点
+			$scope.lastDot=false;//前面无点
 		}
 		
 		//循环产生页码标签
@@ -87,7 +92,7 @@ app.controller('searchController', function($scope, searchService) {
 		}
 		
 	}
-	//
+	//判断当前页是否为最后一页
 	$scope.isEndPage=function(){
 		if($scope.searchMap.pageNo==$scope.searchMap.totalPages){
 			return true;
@@ -95,6 +100,21 @@ app.controller('searchController', function($scope, searchService) {
 			return false;
 		}
 		
+	}
+	//设置排序规则
+	$scope.sortSearch=function(sortField,sort){
+		$scope.searchMap.sortField=sortField;
+		$scope.searchMap.sort=sort;
+		$scope.search();
+	}
+	//判断关键字是不是品牌
+	$scope.keywordsIsBrand=function(){
+		for(var i=1;i<$scope.resultMap.brandList.length;i++){
+			if($scope.searchMap.keywords.indexOf($scope.resultMap.brandList[i].text)>=0){
+				return true;
+			}
+			return false;
+		}
 	}
 	
 

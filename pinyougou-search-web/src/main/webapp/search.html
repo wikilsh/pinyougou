@@ -170,7 +170,7 @@
 					</div>
 					<div class="fl ext"></div>
 				</div>
-				<div class="type-wrap logo" ng-if="resultMap.brandList!=null && searchMap.brand==''">
+				<div class="type-wrap logo" ng-if="resultMap.brandList!=null && searchMap.brand==''&&keywordsIsBrand()==false">
 					<div class="fl key brand">品牌</div>
 					<div class="value logos">
 						<ul class="logo-list">
@@ -243,11 +243,18 @@
 				<div class="sui-navbar">
 					<div class="navbar-inner filter">
 						<ul class="sui-nav">
-							<li class="active"><a href="#">综合</a></li>
+							<li class="active"><a href="#" ng-click="sortSearch('','')">综合</a></li>
 							<li><a href="#">销量</a></li>
-							<li><a href="#">新品</a></li>
+							<li>
+								<a href="#" ng-click="sortSearch('updatetime','DESC')">新品</a>
+							</li>
 							<li><a href="#">评价</a></li>
-							<li><a href="#">价格</a></li>
+							<li>
+								<a href="#" ng-click="sortSearch('price','ASC')">价格↑</a>
+							</li>
+							<li>
+								<a href="#" ng-click="sortSearch('price','DESC')">价格↓</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -484,15 +491,11 @@
 					</div>
 				</div>
 				<div class="Mod-copyright">
-					<ul class="helpLink">
-						<li>关于我们<span class="space"></span></li>
-						<li>联系我们<span class="space"></span></li>
-						<li>关于我们<span class="space"></span></li>
+					<ul class="helpLink">			
+						<li>联系我们<span class="space"></span></li>						
 						<li>商家入驻<span class="space"></span></li>
 						<li>营销中心<span class="space"></span></li>
-						<li>友情链接<span class="space"></span></li>
-						<li>关于我们<span class="space"></span></li>
-						<li>营销中心<span class="space"></span></li>
+						<li>友情链接<span class="space"></span></li>											<li>营销中心<span class="space"></span></li>
 						<li>友情链接<span class="space"></span></li>
 						<li>关于我们</li>
 					</ul>
