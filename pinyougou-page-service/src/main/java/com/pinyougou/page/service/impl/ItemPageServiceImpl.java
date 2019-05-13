@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,13 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
 import com.pinyougou.mapper.TbItemCatMapper;
+import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.page.service.ItemPageService;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsDesc;
+import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.TbItemExample;
+import com.pinyougou.pojo.TbItemExample.Criteria;
 
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -41,6 +46,9 @@ public class ItemPageServiceImpl implements ItemPageService {
 	@Autowired
 	private TbItemCatMapper itemCatMapper;
 	
+	@Autowired
+	private TbItemMapper itemMapper; 
+	
 	@Override
 	public boolean genItemHtml(Long goodsId) {
 		
@@ -62,6 +70,14 @@ public class ItemPageServiceImpl implements ItemPageService {
 			dataModel.put("itemCat1", itemCat1);
 			dataModel.put("itemCat2", itemCat2);
 			dataModel.put("itemCat3", itemCat3);
+			
+			//4.SKU列表
+			TbItemExample example=new TbItemExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andGoodsIdEqualTo(goodsId);//指定SPU id
+			example.setOrderByClause("is_default desc");//按照状态降序 保证第一个为默认
+			List<TbItem> ltemList = itemMapper.selectByExample(example);
+			dataModel.put("itemList", ltemList);
 			
 			Writer out = new FileWriter(pagedir+goodsId+".html");
 			template.process(dataModel, out);

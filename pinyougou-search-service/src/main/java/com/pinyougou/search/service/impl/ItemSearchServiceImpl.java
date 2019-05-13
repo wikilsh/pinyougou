@@ -37,6 +37,8 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 	@Autowired
 	private SolrTemplate solrTemplate;
 	
+	
+	
 	@Override
 	public Map search(Map searchMap) {
 		//关键字空格处理
@@ -60,6 +62,9 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 				map.putAll(searchBrandAndSpecList(categoryList.get(0)));
 			}	
 		}
+		//4 SKU列表
+		
+		
 		
 		return map;
 	}
