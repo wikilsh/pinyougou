@@ -1,7 +1,24 @@
 package com.pinyougou.user.service.impl;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.Message;
+import javax.jms.Session;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.pinyougou.mapper.TbUserMapper;
@@ -46,6 +63,11 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void add(TbUser user) {
+		user.setCreated(new Date());
+		user.setUpdated(new Date());
+		user.setSourceType("1");//注冊來源
+		String password = DigestUtils.md5Hex(user.getPassword());//对密码采用md5加密
+		user.setPassword(password);
 		userMapper.insert(user);		
 	}
 
@@ -132,5 +154,64 @@ public class UserServiceImpl implements UserService {
 		Page<TbUser> page= (Page<TbUser>)userMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
+
+		@Autowired
+		private RedisTemplate<String, Object> redisTemplate;
+		
+		@Autowired
+		private JmsTemplate jmsTemplate;
+		
+		@Autowired
+		private Destination smsDestination;
+		
+		@Value("${template_code}")
+		private String template_code;
+		
+		@Value("${sign_name}")
+		private String sign_name;
+		
+		/**
+		 * 生成短信验证码
+		 */
+		@Override
+		public void createSmsCode(final String phone) {
+			//1.生成六位数字
+			final String smscode=(long)(Math.random()*1000000)+"";
+			System.out.println("验证码："+smscode);
+			//2.存入缓存
+			redisTemplate.boundHashOps("smscode").put(phone, smscode);
+			//3.发送到activemq
+			jmsTemplate.send(smsDestination, new MessageCreator() {
+				
+				@Override
+				public Message createMessage(Session session) throws JMSException {
+					MapMessage mapMessage = session.createMapMessage();
+					mapMessage.setString("mobile", phone);//手机号
+					mapMessage.setString("template_code",template_code);//短信模板编号
+					mapMessage.setString("sign_name", sign_name);//签名
+					//mapMessage.setString("param", arg1);
+					Map map = new HashMap();
+					map.put("number", smscode);
+					mapMessage.setString("param", JSON.toJSONString(map));
+					return mapMessage;
+				}
+			});
+		}
+
+		/**
+		 * 判断短信验证码是否正确
+		 */
+		@Override
+		public boolean checkSmsCode(String phone, String code) {
+			//得到缓存中存储的验证码
+			String sysCode=(String)redisTemplate.boundHashOps("smscode").get(phone);
+			if (sysCode==null) {
+				return false;
+			}
+			if (!sysCode.equals(code)) {
+				return false;
+			}
+			return true;
+		}
 	
 }
