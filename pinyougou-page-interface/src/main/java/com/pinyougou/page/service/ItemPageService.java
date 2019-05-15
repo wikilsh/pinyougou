@@ -1,10 +1,6 @@
 package com.pinyougou.page.service;
 
-/**
- * 商品详细页接口
- * @author 李帅辉
- *
- */
+
 public interface ItemPageService {
 
 	/**
@@ -13,5 +9,11 @@ public interface ItemPageService {
 	 * @return
 	 */
 	public boolean genItemHtml(Long goodsId);
+	/**
+	 * 删除商品详细页
+	 * @param goodsIds
+	 * @return
+	 */
+	public boolean deleteItemHtml(Long[] goodsIds);
 	
 }
