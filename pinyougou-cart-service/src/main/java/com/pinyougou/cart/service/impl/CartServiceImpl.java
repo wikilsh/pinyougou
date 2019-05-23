@@ -9,7 +9,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.cart.service.CartService;
+import com.pinyougou.mapper.TbAddressMapper;
 import com.pinyougou.mapper.TbItemMapper;
+import com.pinyougou.pojo.TbAddress;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbOrderItem;
 import com.pinyougou.pojogroup.Cart;
@@ -178,5 +180,13 @@ public class CartServiceImpl implements CartService {
 			}
 		}
 		return cartList1;
+	}
+	
+	@Autowired
+	private TbAddressMapper addressMapper;
+	@Override
+	public void addAddress(TbAddress address) {
+		addressMapper.insert(address); 
+		
 	}
 }

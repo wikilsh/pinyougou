@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="pinyougou-cart-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-cart-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-cart-web/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-common/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-content-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-content-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-dao/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-manager-web/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-order-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-order-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-page-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-page-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-pay-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-pay-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-pojo/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-portal-web/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-search-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-search-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-search-web/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-sellergoods-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-sellergoods-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-shop-web/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-solr-util/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-user-interface/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-user-service/src/main/java"/>
+	<classpathentry kind="src" path="pinyougou-user-web/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/alicom-dysms-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/alicom-mns-receive-samples"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/aliyun-java-sdk-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/aliyun-java-sdk-dysmsapi"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/casclient_demo1"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/casclient_demo2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/casclient_demo3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dubboxdemo-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dubboxdemo-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fastDFSdemo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/freemarker.Demo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/generatorSqlmapCustom"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/itcast_sms_service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jms-spring-comsumer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jms-spring-producer"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jmsDemo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-cart-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-cart-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-cart-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-content-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-content-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-dao"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-manager-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-order-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-order-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-page-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-page-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-page-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-pay-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-pay-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-pojo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-portal-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-search-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-search-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-search-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-sellergoods-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-sellergoods-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-shop-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-solr-util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-user-interface"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-user-service"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pinyougou-user-web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spring-security-demo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/springboot_demo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SpringDataRedisDemo"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/springDataSolrDemo"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

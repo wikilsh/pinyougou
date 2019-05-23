@@ -1,4 +1,5 @@
 package com.pinyougou.cart.controller;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,6 +50,11 @@ public class AddressController {
 	 */
 	@RequestMapping("/add")
 	public Result add(@RequestBody TbAddress address){
+		//获取登录名
+		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+		address.setUserId(userId);
+		address.setCreateDate(new Date());
+		
 		try {
 			addressService.add(address);
 			return new Result(true, "增加成功");

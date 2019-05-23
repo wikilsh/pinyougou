@@ -96,20 +96,20 @@
 						      <div class="modal-body">
 						      	<form action="" class="sui-form form-horizontal">
 						      		 <div class="control-group">
-									    <label class="control-label">收货人：</label>
+									    <label class="control-label" ng-model="addressList.contact">收货人：</label>
 									    <div class="controls">
 									      <input type="text" class="input-medium">
 									    </div>
 									  </div>
 									   
 									   <div class="control-group">
-									    <label class="control-label">详细地址：</label>
+									    <label class="control-label" ng-model="addressList.address">详细地址：</label>
 									    <div class="controls">
 									      <input type="text" class="input-large">
 									    </div>
 									  </div>
 									   <div class="control-group">
-									    <label class="control-label">联系电话：</label>
+									    <label class="control-label" ng-model="addressList.mobile">联系电话：</label>
 									    <div class="controls">
 									      <input type="text" class="input-medium">
 									    </div>
@@ -121,12 +121,14 @@
 									    </div>
 									  </div>
 									   <div class="control-group">
-									    <label class="control-label">地址别名：</label>
+									    <label class="control-label" ng-model="addressList.alias">地址别名：</label>
 									    <div class="controls">
 									      <input type="text" class="input-medium">
 									    </div>
 									    <div class="othername">
-									    	建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　<a href="#" class="sui-btn btn-default">父母家</a>　<a href="#" class="sui-btn btn-default">公司</a>
+									    	建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　
+									    				<a href="#" class="sui-btn btn-default">父母家</a>　
+									    				<a href="#" class="sui-btn btn-default">公司</a>
 									    </div>
 									  </div>
 									  
@@ -135,7 +137,7 @@
 						      	
 						      </div>
 						      <div class="modal-footer">
-						        <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定</button>
+						        <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large" >确定</button>
 						        <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">取消</button>
 						      </div>
 						    </div>
@@ -233,7 +235,7 @@
 			<div class="fc-receiverInfo">手机号: {{address.mobile}}	</div>
 		</div>
 		<div class="submit">
-			<a class="sui-btn btn-danger btn-xlarge" href="pay.html">提交订单</a>
+			<a class="sui-btn btn-danger btn-xlarge" ng-click="submitOrder()">提交订单</a>
 		</div>
 	</div>
 	<!-- 底部栏位 -->
@@ -362,8 +364,8 @@
 					<li>友情链接<span class="space"></span></li>
 					<li>关于我们</li>
 				</ul>
-				<p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100</p>
-				<p>京ICP备08001421号京公网安备110108007702</p>
+				<p>地址：河南省郑州市高新区莲花街100号河南工业大学  邮编：450001  电话：0371-666-1688 传真：0371-82992100</p>
+				<p>豫ICP备05002475号 郑公信备4101000000080号</p>
 			</div>
 		</div>
 	</div>
