@@ -108,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
 			orderIdList.add(orderId+"");//添加到订单列表 
 			total_money+=money;//累加到总金额 
 		}
-		
+		//添加支付日志
 		if("1".equals(order.getPaymentType())){//如果是微信支付 
 			TbPayLog payLog=new TbPayLog(); 
 			String outTradeNo=  idWorker.nextId()+"";//支付订单号 
@@ -129,7 +129,8 @@ public class OrderServiceImpl implements OrderService {
 		//3.清除redis中的购物车
 		redisTemplate.boundHashOps("cartList").delete(order.getUserId()); 
 		
-		orderMapper.insert(order);		
+		orderMapper.insert(order);	
+		System.out.println("订单信息添加数据库中");
 	}
 
 	

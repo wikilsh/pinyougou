@@ -13,6 +13,7 @@ app.controller('userController', function($scope, $controller, userService) {
 		userService.add($scope.entity,$scope.smscode).success(function(response) {
 			alert(response.message);
 		});
+		location.href='http://localhost:9100/cas/login.html';
 	}
 	
 	$scope.sendCode=function(){

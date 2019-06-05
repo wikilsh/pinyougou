@@ -100,4 +100,11 @@ public class WeiXinPayServiceImpl implements WeiXinPayService {
 		
 	}
 
+	/*public Map closePay(String out_trade_no) {
+		//1.封装参数
+		
+		//2.发送请求
+		
+		//3.获取结果
+	}*/
 }

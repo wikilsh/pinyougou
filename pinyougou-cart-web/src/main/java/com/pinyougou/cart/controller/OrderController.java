@@ -1,7 +1,12 @@
 package com.pinyougou.cart.controller;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,12 @@ import entity.Result;
 @RequestMapping("/order")
 public class OrderController {
 
+	@Autowired
+	private HttpServletRequest request;
+	@Autowired
+	private HttpServletResponse response;
+	
+	
 	@Reference
 	private OrderService orderService;
 	
@@ -49,13 +60,15 @@ public class OrderController {
 	 * @return
 	 */
 	@RequestMapping("/add")
+	@CrossOrigin(origins="http://localhost:9107/login.html")
 	public Result add(@RequestBody TbOrder order){
 		
 		//获取当前登录人账号
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		order.setUserId(username);
 		order.setSourceType("2");//订单来源  PC
-		
+		System.out.println(username);
+		System.out.println(order);
 		try {
 			orderService.add(order);
 			return new Result(true, "增加成功");

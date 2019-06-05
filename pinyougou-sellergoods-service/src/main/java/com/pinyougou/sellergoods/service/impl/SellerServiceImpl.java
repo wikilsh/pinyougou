@@ -70,6 +70,7 @@ public class SellerServiceImpl implements SellerService {
 	 * @param id
 	 * @return
 	 */
+	
 	@Override
 	public TbSeller findOne(String id){
 		return sellerMapper.selectByPrimaryKey(id);

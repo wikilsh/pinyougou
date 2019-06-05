@@ -28,7 +28,7 @@ import entity.Result;
 @RequestMapping("/cart")
 public class CartController {
 
-	@Reference(timeout=6000)
+	@Reference(timeout = 6000)
 	private CartService cartService;
 
 	@Autowired
@@ -37,83 +37,78 @@ public class CartController {
 	@Autowired
 	private HttpServletResponse response;
 
-	/**
-	 * 购物车列表
-	 * 
-	 * @return
-	 */
 	@RequestMapping("/findCartList")
 	public List<Cart> findCartList() {
-		// 当前登陆人账号
+		// 当前登录人账号	
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("当前登陆人：" + username);
-		
+		System.out.println("当前登录人：" + username);
+
 		String cartListString = util.CookieUtil.getCookieValue(request, "cartList", "UTF-8");
 		if (cartListString == null || cartListString.equals("")) {
 			cartListString = "[]";
 		}
 		List<Cart> cartList_cookie = JSON.parseArray(cartListString, Cart.class);
-		if (username.equals("anonymousUser")) { // 如果未登录
-			// 1.从cookie提取购物车
-			System.out.println("从cookie中提取购购物车信息...");			
+
+		if (username.equals("anonymousUser")) {// 如果未登录
+			// 从cookie中提取购物车
+			System.out.println("从cookie中提取购物车");
+
 			return cartList_cookie;
-		} else { // 如果已登陆
-			// 从redis中提取用户的购物车内容
-			System.out.println("从redis中提取用户的购物车信息...");
+
+		}else{// 如果已登录
+				// 获取redis购物车
 			List<Cart> cartList_redis = cartService.findCartListFromRedis(username);
-			
-			if (cartList_cookie.size()>0) {
-				//合并购物车逻辑
-				List<Cart> cartList = cartService.mergeCartList(cartList_redis, cartList_cookie);
-				//清除本地cookie的数据
+			if (cartList_cookie.size() > 0) {// 判断当本地购物车中存在数据
+				// 得到合并后的购物车
+				List<Cart> cartList = cartService.mergeCartList(cartList_cookie, cartList_redis);
+				// 将合并后的购物车存入redis
+				cartService.saveCartListToRedis(username, cartList);
+				// 本地购物车清除
 				util.CookieUtil.deleteCookie(request, response, "cartList");
-				//将合并后的购物车存入redis
-				cartService.saveCartListToRedis(username, cartList_redis);
-				System.out.println("执行购物车合并逻辑");
+				System.out.println("执行了合并购物车的逻辑");
 				return cartList;
-			}			
+			}
 			return cartList_redis;
 		}
+		
 
 	}
 
-	/**
-	 * 添加商品到购物车
-	 * 
-	 * @param itemId
-	 * @param num
-	 * @return
-	 */
 	@RequestMapping("/addGoodsToCartList")
-	@CrossOrigin(origins="http://localhost:9105",allowCredentials="true")
+	@CrossOrigin(origins = "http://localhost:9105")
 	public Result addGoodsToCartList(Long itemId, Integer num) {
-		
-		//response.setHeader("Access-Control-Allow-Origin","http://localhost:9105"); 
-		//response.setHeader("Access-Control-Allow-Credentials","true"); 
-		
-		// 当前登陆人账号
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println("当前登陆用户：" + username);
-		
+
+		// response.setHeader("Access-Control-Allow-Origin",
+		// "http://localhost:9105");//可以访问的域(当此方法不需要操作cookie)
+		// response.setHeader("Access-Control-Allow-Credentials",
+		// "true");//如果操作cookie，必须加上这句话
+
+		// 当前登录人账号
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println("当前登录人：" + name);
+
 		try {
-			List<Cart> cartList = findCartList();// 获取购物车列表
-			// 2.调用服务方法操作购物车
+			// 提取购物车
+			List<Cart> cartList = findCartList();
+			// 调用服务方法操作购物车
 			cartList = cartService.addGoodsToCartList(cartList, itemId, num);
-			if (username.equals("anonymousUser")) { // 如果未登录				
-				// 3.将新的购物车存入cookie
-				util.CookieUtil.setCookie(request, response, "cartList", JSON.toJSONString(cartList), 3600 * 24,"UTF-8");
-				System.out.println("向cookie中存入购物车信息...");
-			}else{ // 如果已登陆
-				// 向redis存入购物车
-				System.out.println("向redis中存入购物车信息...");
-				cartService.saveCartListToRedis(username, cartList);
-				
+
+			if (name.equals("anonymousUser")) {// 如果未登录
+				// 将新的购物车存入cookie
+				String cartListString = JSON.toJSONString(cartList);
+				util.CookieUtil.setCookie(request, response, "cartList", cartListString, 3600 * 24, "UTF-8");
+				System.out.println("向cookie存储购物车");
+
+			} else {// 如果登录
+				cartService.saveCartListToRedis(name, cartList);
 			}
-			return new Result(true, "添加到购物车成功");
+
+			return new Result(true, "存入购物车成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(true, "添加到购物车失败");
+			return new Result(false, "存入购物车失败");
 		}
 
 	}
+
 }

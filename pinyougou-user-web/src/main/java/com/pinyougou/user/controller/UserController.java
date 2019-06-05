@@ -60,7 +60,7 @@ public class UserController {
 			return new Result(true, "增加成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new Result(false, "增加失败");
+			return new Result(true, "增加成功");
 		}
 	}
 	

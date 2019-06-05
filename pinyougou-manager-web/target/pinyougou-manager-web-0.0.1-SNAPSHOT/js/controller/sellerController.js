@@ -3,6 +3,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
+	$scope.status=['未审核','已审核','审核未通过','已关闭'];//商家状态
+	
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
 		sellerService.findAll().success(
@@ -65,6 +67,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 		);				
 	}
 	
+	
+	
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
@@ -89,4 +93,5 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}
 		);
 	}
+	
 });	

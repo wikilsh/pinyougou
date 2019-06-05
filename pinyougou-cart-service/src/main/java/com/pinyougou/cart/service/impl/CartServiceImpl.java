@@ -26,8 +26,6 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private TbItemMapper itemMapper;
 	
-	
-	
 	@Override
 	public List<Cart> addGoodsToCartList(List<Cart> cartList, Long itemId, Integer num) {
 		

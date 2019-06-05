@@ -150,7 +150,7 @@ public class GoodsController {
 				//得到需要导入的SKU列表
 				List<TbItem> itemList=goodsService.findItemListByGoodsIdandStatus(ids, status);
 				//调用搜索接口实现数据批量导入				
-				//itemSearchService.importList(itemList);
+				
 				if(itemList.size()>0){
 					final String jsonString = JSON.toJSONString(itemList);
 					jmsTemplate.send(queueSolrDestination, new MessageCreator() {	
@@ -163,10 +163,7 @@ public class GoodsController {
 					System.out.println("沒有明细数据");
 				}
 				
-				//静态页面生成
-				//for(Long goodsId:ids){
-					//itemPageService.genItemHtml(goodsId);
-				//}
+				
 				//静态页生成
 				for(final Long goodsId:ids){
 					jmsTemplate.send(topicPageDestination, new MessageCreator() {
